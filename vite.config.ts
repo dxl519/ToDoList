@@ -1,6 +1,7 @@
 import { defineConfig } from 'vite'
 // import react from "@vitejs/plugin-react";
 import react from '@vitejs/plugin-react-swc'
+import svgr from 'vite-plugin-svgr'
 
 const mobile =
   process.env.TAURI_PLATFORM === 'android' ||
@@ -8,14 +9,15 @@ const mobile =
 
 // https://vitejs.dev/config/
 export default defineConfig(async () => ({
-  plugins: [react()],
+  plugins: [react(), svgr()],
 
   // Vite options tailored for Tauri development and only applied in `tauri dev` or `tauri build`
   // prevent vite from obscuring rust errors
   clearScreen: false,
   // tauri expects a fixed port, fail if that port is not available
   server: {
-    port: 1420,
+    host: '0.0.0.0',
+    port: 1421,
     strictPort: true
   },
   // to make use of `TAURI_DEBUG` and other env variables
